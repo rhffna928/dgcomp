@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Dgcomp">
+    <select id="searchcom" parameterType="string" resultType="dgcomp">
+        select * from dgcom_ where ad_idx = #{ad_idx}
+    </select>
+    <select id="dglist" parameterType="com.dgcom.project.dto.Criteria" resultType="dgcomp">
+        <![CDATA[
+        SELECT *
+        FROM dgcom_
+        ORDER BY idx DESC
+        LIMIT  #{skip}, #{amount};
+        ]]>
+    </select>
+    <select id="total" resultType="int">
+        select count(*) from dgcom_
+    </select>
+
+    <select id="search" resultType="dgcom">
+        select * from dgconn
+    </select>
+
+    <select id="getListpaging"  resultType="dgcomp">
+        <![CDATA[
+        SELECT *
+        FROM dgcom_
+        ORDER BY idx DESC
+        LIMIT  #{skip}, #{amount};
+        ]]>
+    </select>
+</mapper>
