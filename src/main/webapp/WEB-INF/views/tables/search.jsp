@@ -3,49 +3,24 @@
 <%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
 <!DOCTYPE html>
 <html>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#customerSelect").change(function() {
-	    let ad_idx = $("#customerSelect").val();
-		$.ajax({
-			type : "post",
-			url : "${pageContext.request.contextPath}/searchcom.do",
-			data : {
-			"ad_idx":ad_idx
-            },
-			success : function(data) {
-                if(data==""){
-         			$("#seachdata").html("등록되어 있지 않은 번호입니다.").css("color","red");
-         		}else{
-        		    data.forEach(function(data) {
-             		    var tableBody = $("#dataTable tbody");
-                        tableBody.empty();
-                        var row = "<tr>";
-                        row += "<td>" + data.re_idx + "</td>";
-                        row += "<td>" + data.re_time + "</td>";
-                        row += "<td>" + data.com_div + "</td>";
-                        row += "<td>" + data.prog + "</td>";
-                        row += "<td>" + data.cb + "</td>";
-                        row += "<td>" + data.tex + "</td>";
-                        row += "<td>" + data.result2 + "</td>";
-                        row += "</tr>";
-                        tableBody.append(row);
-                    });
-         		}
-			},
-			error : function() {
-				alert('error');
-			}
-		});
-	});
-});
+/
 </script>
 <head>
     <title>고객번호와 이미지 매칭 예제</title>
 </head>
+<style>
+      table {
+        width: 1080px;
+      }
+      #resutl {
+      width: 40%;
+      }
+    </style>
 <body>
-    <h1>고객번호와 이미지 매칭</h1>
+    <h1>고객번호와 누수그래프 매칭</h1>
     <select id="customerSelect" name="select">
             <option value="">고객번호 선택</option>
             <c:forEach items="${dglist}" var="dg">
@@ -107,7 +82,8 @@ $(document).ready(function() {
                         },
             			success : function(data) {
                             if(data==""){
-                     			$("#seachdata").html("등록되어 있지 않은 번호입니다.").css("color","red");
+                         	    var tableBody = $("#dataTable tbody");
+                                tableBody.empty();
                      		}else{
 
                          	    var tableBody = $("#dataTable tbody");
@@ -115,12 +91,12 @@ $(document).ready(function() {
                      		    $.each(data, function(index, item) {
                                     var row = "<tr>";
                                     row += "<td>" + item.re_idx + "</td>";
-                                    row += "<td>" + item.re_time + "</td>";
+                                    row += "<td>" + item.year2+"-"+item.month2+"-"+item.day2+" "+item.hour2+":"+item.min2+ "</td>";
                                     row += "<td>" + item.com_div + "</td>";
                                     row += "<td>" + item.prog + "</td>";
                                     row += "<td>" + item.cb + "</td>";
                                     row += "<td>" + item.tex + "</td>";
-                                    row += "<td>" + item.result2 + "</td>";
+                                    row += "<td id='resutl'>" + item.result2 + "</td>";
                                     row += "</tr>";
                                     tableBody.append(row);
                                 });

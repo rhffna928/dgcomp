@@ -19,9 +19,11 @@ public class Criteria {
     /* 스킵 할 게시물 수( (pageNum-1) * amount ) */
     private int skip;
 
+    private String keyword;
+
     /* 기본 생성자 -> 기본 세팅 : pageNum = 1, amount = 10 (파라미터없이 호출됐을때) */
     public Criteria() {
-        this(1,10);
+        this( 1,20);
     }
 
     /* 생성자 => 원하는 pageNum, 원하는 amount (파라미터와 함께 호출됐을때)*/
@@ -60,6 +62,6 @@ public class Criteria {
 
     @Override
     public String toString() {
-        return "Criteria [pageNum = " + pageNum + ", amount = " + amount + ", skip = " + skip +"]";
+        return "Criteria [pageNum = " + pageNum + ", amount = " + amount + ", skip = " + skip +", keyword="+ keyword +"]";
     }
 }

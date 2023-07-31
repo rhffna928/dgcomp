@@ -22,17 +22,16 @@ public class DgCompController {
     @GetMapping("/table.do")
     public ModelAndView table(@ModelAttribute("cri") Criteria cri, Model model) {
         ModelAndView mav = new ModelAndView("/tables/table");
-        List<DgCompDTO> listpaging = dgcompService.getListpaging(cri);
         List<DgCompDTO> dgconpDTO = dgcompService.dglist(cri);
 
-        int total = dgcompService.getTotal();
+        int total = dgcompService.getTotal(cri);
         PageMaker pageMake = new PageMaker(cri, total);
 
         model.addAttribute("dglist", dgconpDTO);
         model.addAttribute("pageMaker", pageMake);
-        model.addAttribute("listpaging", listpaging);
 
-        //System.out.println(pageMake);
+        System.out.println("테이블="+dgconpDTO);
+        System.out.println(pageMake);
         return mav;
     }
     @GetMapping("/search.do")

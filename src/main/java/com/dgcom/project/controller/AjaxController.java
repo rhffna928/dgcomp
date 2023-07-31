@@ -22,4 +22,12 @@ public class AjaxController {
         System.out.println("해당 민원 "+result);
         return result;
     }
+    @PostMapping("/searchyear.do")
+    public List<DgCompDTO> searchyear(@RequestParam("year") int year){
+        
+        List<DgCompDTO> result = dgcompService.getsearchyear(year);
+        System.out.println("연도"+year);
+        
+        return result;
+    }
 }

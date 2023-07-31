@@ -3,31 +3,34 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Dgcomp">
+
     <select id="searchcom" parameterType="string" resultType="dgcomp">
-        select * from dgcom_ where ad_idx = #{ad_idx}
+        select * from dgcom_ where ad_idx = #{ad_idx} order by re_time DESC;
     </select>
     <select id="dglist" parameterType="com.dgcom.project.dto.Criteria" resultType="dgcomp">
-        <![CDATA[
-        SELECT *
-        FROM dgcom_
-        ORDER BY idx DESC
-        LIMIT  #{skip}, #{amount};
-        ]]>
+         select * from (
+                select idx,ad_idx,prog,com_div,cb,tex,result2,year2,month2,day2,hour2,min2
+                 from dgcom_
+                 <if test="keyword != null">
+                    where result2 like concat('%',#{keyword},'%')
+                 </if>
+                  order by  year2 DESC, month2 DESC, day2 DESC, hour2 DESC,min2 DESC) as a1
+         limit #{skip},#{amount}
     </select>
     <select id="total" resultType="int">
         select count(*) from dgcom_
+            <if test="keyword != null">
+                where result2 like concat('%',#{keyword},'%')
+            </if>
     </select>
 
     <select id="search" resultType="dgcom">
         select * from dgconn
     </select>
 
-    <select id="getListpaging"  resultType="dgcomp">
-        <![CDATA[
-        SELECT *
-        FROM dgcom_
-        ORDER BY idx DESC
-        LIMIT  #{skip}, #{amount};
-        ]]>
+    <select id="getSearchYear" parameterType="int" resultType="dgcomp">
+        select * from dgcom_ where year1 = #{year1}
     </select>
+
+
 </mapper>

@@ -20,6 +20,7 @@ public class PageMaker {
     /*전체 게시물 수*/
     private int total;
 
+
     /* 현재 페이지, 페이지당 게시물 표시수 정보 */
     private Criteria cri;
 

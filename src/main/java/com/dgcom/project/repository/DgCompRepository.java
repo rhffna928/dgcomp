@@ -18,8 +18,8 @@ public class DgCompRepository {
         return sql.selectList("Dgcomp.dglist", cri);
     }
 
-    public int getTotal() {
-        return sql.selectOne("Dgcomp.total");
+    public int getTotal(Criteria cri) {
+        return sql.selectOne("Dgcomp.total", cri);
     }
 
     public List<DgCompDTO> searchcom(String ad_idx) {
@@ -31,7 +31,8 @@ public class DgCompRepository {
         return sql.selectList("Dgcomp.search");
     }
 
-    public List<DgCompDTO> getListpaging(Criteria cri) {
-        return sql.selectList("Dgcomp.getListpaging",cri);
+
+    public List<DgCompDTO> getsearchyear(int year) {
+        return sql.selectList("Dgcomp.getSearchYear", year);
     }
 }

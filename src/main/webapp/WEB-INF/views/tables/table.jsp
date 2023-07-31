@@ -6,47 +6,52 @@
 <html>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script>
 
-</script>
-
-</script>
 <head>
 </head>
+<style>
+  .search_area{
+    display: inline-block;
+    margin-top: 30px;
+    margin-left: 500px;
+  }
+  .search_area input{
+      height: 30px;
+    width: 350px;
+  }
+  .search_area button{
+     width: 100px;
+    height: 36px;
+  }
+
+</style>
 <body>
 
-<select id="customerSelect" name="select">
-        <option value="">고객번호 선택</option>
-        <c:forEach items="${dglist}" var="dglist">
-            <option  value="${dglist.ad_idx}">${dglist.ad_idx}</option>
-        </c:forEach>
-    </select>
-    <button type="button" id="searchcomp"> 조회</button>
+    <div class="search_area">
+        <input type="text" name="keyword" id="keywordInput" value="${pageMaker.cri.keyword}"  placeholder="검색어를 입력해주세요" >
+        <button type="button" id="searchkeyword">검색</button>
+    </div>
 
     <!-- Section-->
     <section class="py-5">
-        <table border="1" style="width:800px">
+
+        <table border="1" style="width:100%">
             <thread>
-            <tr>
-            <th>고객번호</th>
-            <th>연도</th>
-            <th>월</th>
-            <th>일</th>
-            <th>민원구분</th>
-            <th>작업상태</th>
-            <th>구경</th>
-            <th>재질</th>
-            <th>처리결과2</th>
-            </tr>
+                <tr>
+                    <th>고객번호</th>
+                    <th>민원날짜</th>
+                    <th>민원구분</th>
+                    <th>작업상태</th>
+                    <th>구경</th>
+                    <th>재질</th>
+                    <th>처리결과2</th>
+                </tr>
             </thread>
             <tbody>
                 <c:forEach items="${dglist}" var="dglist">
                     <tr>
-
                         <td>${dglist.ad_idx}</td>
-                        <td>${dglist.year1}</td>
-                        <td>${dglist.month1}</td>
-                        <td>${dglist.day1}</td>
+                        <td>${dglist.year2}-${dglist.month2}-${dglist.day2}</td>
                         <td>${dglist.com_div}</td>
                         <td>${dglist.prog}</td>
                         <td>${dglist.cb}</td>
@@ -57,24 +62,35 @@
                 </tbody>
 
         </table>
-        <a href="table?pageNum=1">&laquo;</a>
-    			<ul class="pagination">
-                    <c:if test="${pageMaker.prev }">
-                    	<li class="pagination_button">
-                    		<a href='<c:url value="/tables/table?pageNum=${pageMaker.startPage - 1 }"/>'>Previous</a>
-                    	</li>
-                    </c:if>
-                    <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
-                    	<li class="pagination_button">
-                    		<a href='<c:url value="/tables/table?pageNum=${num }"/>'>${num}</a>
-                    	</li>
-                    </c:forEach>
-                    <c:if test="${pageMaker.next }">
-                    	<li class="pagination_button">
-                    		<a href='<c:url value="/tables/table?pageNum=${pageMaker.endPage + 1 }"/>'>Next</a>
-                        	</li>
-                    </c:if>
-                </ul>
+    		<ul class="pagination">
+                <c:if test="${pageMaker.prev}">
+                   	<a href="${path}/table.do?pageNum=${pageMaker.startPage - 1 }">이전</a>
+                </c:if>
+                <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+                  	<a href="${path}/table.do?pageNum=${num }">${num}</a>
+                </c:forEach>
+                <c:if test="${pageMaker.next }">
+                   	<a href="${path}/table.do?pageNum=${pageMaker.endPage + 1 }">다음</a>
+                </c:if>
+            </ul>
+            <form id="moveForm" method="get">
+                <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+                <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+                <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+            </form>
     </section>
 </body>
+<script>
+$(document).ready(function() {
+    $(".search_area button").on("click",function(e) {
+        e.preventDefault();
+        let keyword = $("input[name=keyword]").val();
+
+
+        location.href = "${path}/table.do?pageNum=1"+"&keyword="+keyword;
+
+        alert("요청성공");
+    });
+});
+</script>
 <html>
