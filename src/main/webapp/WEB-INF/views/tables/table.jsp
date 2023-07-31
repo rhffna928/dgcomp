@@ -15,6 +15,10 @@
     margin-top: 30px;
     margin-left: 500px;
   }
+  .search_area select{
+      height: 30px;
+    width: 100px;
+  }
   .search_area input{
       height: 30px;
     width: 350px;
@@ -27,7 +31,13 @@
 </style>
 <body>
 
+    <a href="<%=request.getContextPath()%>/index.do">홈</a>
     <div class="search_area">
+        <select name="searchType" id="searchType">
+            <option>-----</option>
+            <option name="ad_idx" value="고객번호">고객번호</option>
+            <option name="result2"value="결과">결과</option>
+        </select>
         <input type="text" name="keyword" id="keywordInput" value="${pageMaker.cri.keyword}"  placeholder="검색어를 입력해주세요" >
         <button type="button" id="searchkeyword">검색</button>
     </div>
@@ -77,7 +87,9 @@
                 <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
                 <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
                 <input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+                <input type="hidden" name="searchType" value="${pageMaker.cri.searchType}">
             </form>
+
     </section>
 </body>
 <script>
@@ -85,9 +97,12 @@ $(document).ready(function() {
     $(".search_area button").on("click",function(e) {
         e.preventDefault();
         let keyword = $("input[name=keyword]").val();
+        let searchType = $("input[name=searchType]").val();
+        let st = $("select[name=searchType]").val();
+        alert(st);
 
 
-        location.href = "${path}/table.do?pageNum=1"+"&keyword="+keyword;
+        location.href = "${path}/table.do?pageNum=1"+"&searchType="+st+"&keyword="+keyword;
 
         alert("요청성공");
     });

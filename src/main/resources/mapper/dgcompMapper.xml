@@ -11,9 +11,16 @@
          select * from (
                 select idx,ad_idx,prog,com_div,cb,tex,result2,year2,month2,day2,hour2,min2
                  from dgcom_
-                 <if test="keyword != null">
-                    where result2 like concat('%',#{keyword},'%')
-                 </if>
+                <if test='searchType == "고객번호"'>
+                    <if test="keyword != null">
+                        where ad_idx like concat('%',#{keyword},'%')
+                    </if>
+                </if>
+                <if test='searchType == "결과"'>
+                    <if test="keyword != null">
+                        where result2 like concat('%',#{keyword},'%')
+                    </if>
+                </if>
                   order by  year2 DESC, month2 DESC, day2 DESC, hour2 DESC,min2 DESC) as a1
          limit #{skip},#{amount}
     </select>

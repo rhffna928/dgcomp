@@ -20,6 +20,8 @@ public class Criteria {
     private int skip;
 
     private String keyword;
+    private String searchType;
+
 
     /* 기본 생성자 -> 기본 세팅 : pageNum = 1, amount = 10 (파라미터없이 호출됐을때) */
     public Criteria() {
@@ -62,6 +64,6 @@ public class Criteria {
 
     @Override
     public String toString() {
-        return "Criteria [pageNum = " + pageNum + ", amount = " + amount + ", skip = " + skip +", keyword="+ keyword +"]";
+        return "Criteria [pageNum = " + pageNum + ", amount = " + amount + ", skip = " + skip +", keyword="+ keyword +", searchType="+searchType+"]";
     }
 }
